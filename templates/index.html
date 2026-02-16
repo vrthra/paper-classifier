@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDF Classifier — Deeper (rich inputs) · Smarter (scheduling, selection) · Swifter (process)</title>
+<title>PDF Classifier — Smarter · Leaner · Swifter</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -12,10 +12,11 @@
     --border: #ddd8d0;
     --text: #1a1a1a;
     --text-dim: #6b6560;
-    --accent-smart: #0e9e8f;
-    --accent-lean: #c5a000;
+    --accent-deep: #0e9e8f;
+    --accent-smart: #c5a000;
     --accent-swift: #d93b3b;
     --accent-seeds: #7b61ff;
+    --accent-other: #e67e22;
     --radius: 8px;
   }
 
@@ -68,7 +69,7 @@
 
   .progress-fill {
     height: 100%;
-    background: var(--accent-smart);
+    background: var(--accent-deep);
     transition: width 0.4s ease;
   }
 
@@ -105,7 +106,7 @@
   .sidebar-item.active {
     background: var(--surface);
     color: var(--text);
-    border-left-color: var(--accent-smart);
+    border-left-color: var(--accent-deep);
   }
 
   .sidebar-item .filename {
@@ -130,10 +131,11 @@
   }
 
   .tag-dot.on { opacity: 1; }
-  .tag-dot.deeper { background: var(--accent-smart); }
-  .tag-dot.smarter { background: var(--accent-lean); }
+  .tag-dot.deeper { background: var(--accent-deep); }
+  .tag-dot.smarter { background: var(--accent-smart); }
   .tag-dot.swifter { background: var(--accent-swift); }
   .tag-dot.seeds { background: var(--accent-seeds); }
+  .tag-dot.other { background: var(--accent-other); }
 
   .main {
     flex: 1;
@@ -207,14 +209,14 @@
   }
 
   .check-label.deeper input:checked ~ .check-box {
-    border-color: var(--accent-smart);
-    background: var(--accent-smart);
+    border-color: var(--accent-deep);
+    background: var(--accent-deep);
   }
   .check-label.deeper input:checked ~ .check-box svg { stroke: #fff; }
 
   .check-label.smarter input:checked ~ .check-box {
-    border-color: var(--accent-lean);
-    background: var(--accent-lean);
+    border-color: var(--accent-smart);
+    background: var(--accent-smart);
   }
   .check-label.smarter input:checked ~ .check-box svg { stroke: #fff; }
 
@@ -229,6 +231,12 @@
     background: var(--accent-seeds);
   }
   .check-label.seeds input:checked ~ .check-box svg { stroke: #fff; }
+
+  .check-label.other input:checked ~ .check-box {
+    border-color: var(--accent-other);
+    background: var(--accent-other);
+  }
+  .check-label.other input:checked ~ .check-box svg { stroke: #fff; }
 
   .nav-buttons {
     display: flex;
@@ -285,7 +293,7 @@
     position: fixed;
     bottom: 24px;
     right: 24px;
-    background: var(--accent-smart);
+    background: var(--accent-deep);
     color: var(--bg);
     padding: 8px 16px;
     border-radius: var(--radius);
@@ -328,7 +336,7 @@
     <div class="toolbar" id="toolbar" style="display:none">
       <span class="current-name" id="currentName"></span>
       <div class="checkbox-group">
-        {% for cat, color in [("deeper","smart"), ("smarter","lean"), ("swifter","swift"), ("seeds","seeds")] %}
+        {% for cat, color in [("deeper","smart"), ("smarter","lean"), ("swifter","swift"), ("seeds","seeds"), ("other","other")] %}
         <label class="check-label {{ cat }}">
           <input type="checkbox" id="cb-{{ cat }}" onchange="saveCheck()">
           <span class="check-box">
@@ -381,6 +389,7 @@ function renderSidebar() {
         <span class="tag-dot smarter ${c.smarter ? 'on' : ''}"></span>
         <span class="tag-dot swifter ${c.swifter ? 'on' : ''}"></span>
         <span class="tag-dot seeds ${c.seeds ? 'on' : ''}"></span>
+        <span class="tag-dot other ${c.other ? 'on' : ''}"></span>
       </span>
     </div>`;
   }).join('');
@@ -406,6 +415,7 @@ function selectPdf(idx) {
   document.getElementById('cb-smarter').checked = !!c.smarter;
   document.getElementById('cb-swifter').checked = !!c.swifter;
   document.getElementById('cb-seeds').checked = !!c.seeds;
+  document.getElementById('cb-other').checked = !!c.other;
 
   document.getElementById('prevBtn').disabled = idx === 0;
   document.getElementById('nextBtn').disabled = idx === pdfs.length - 1;
@@ -426,6 +436,7 @@ async function saveCheck() {
     smarter: document.getElementById('cb-smarter').checked,
     swifter: document.getElementById('cb-swifter').checked,
     seeds: document.getElementById('cb-seeds').checked,
+    other: document.getElementById('cb-other').checked,
   };
   classifications[name] = data;
   renderSidebar();
@@ -443,7 +454,7 @@ async function saveCheck() {
 }
 
 function updateProgress() {
-  const classified = Object.values(classifications).filter(c => c.deeper || c.smarter || c.swifter || c.seeds).length;
+  const classified = Object.values(classifications).filter(c => c.deeper || c.smarter || c.swifter || c.seeds || c.other).length;
   document.getElementById('progressText').textContent = `${classified} / ${pdfs.length} classified`;
   document.getElementById('progressFill').style.width = pdfs.length ? `${(classified / pdfs.length) * 100}%` : '0%';
 }
@@ -455,6 +466,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === '2') document.getElementById('cb-smarter').click();
   if (e.key === '3') document.getElementById('cb-swifter').click();
   if (e.key === '4') document.getElementById('cb-seeds').click();
+  if (e.key === '5') document.getElementById('cb-other').click();
 });
 
 init();

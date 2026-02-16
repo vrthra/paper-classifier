@@ -12,7 +12,7 @@ def ensure_csv():
     if not os.path.exists(CSV_FILE):
         with open(CSV_FILE, "w", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow(["pdf_name", "deeper", "smarter", "swifter", "seeds"])
+            writer.writerow(["pdf_name", "deeper", "smarter", "swifter", "seeds", "other"])
 
 
 def load_csv():
@@ -26,6 +26,7 @@ def load_csv():
                 "smarter": row["smarter"] == "True",
                 "swifter": row["swifter"] == "True",
                 "seeds": row["seeds"] == "True",
+                "other": row["other"] == "True",
             }
     return data
 
@@ -33,9 +34,9 @@ def load_csv():
 def save_csv(data):
     with open(CSV_FILE, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["pdf_name", "deeper", "smarter", "swifter", "seeds"])
+        writer.writerow(["pdf_name", "deeper", "smarter", "swifter", "seeds", "other"])
         for pdf_name, checks in sorted(data.items()):
-            writer.writerow([pdf_name, checks["deeper"], checks["smarter"], checks["swifter"], checks["seeds"]])
+            writer.writerow([pdf_name, checks["deeper"], checks["smarter"], checks["swifter"], checks["seeds"], checks["other"]])
 
 
 @app.route("/")
@@ -64,6 +65,7 @@ def classify():
         "smarter": body.get("smarter", False),
         "swifter": body.get("swifter", False),
         "seeds": body.get("seeds", False),
+        "other": body.get("other", False),
     }
     save_csv(data)
     return jsonify({"status": "ok"})
