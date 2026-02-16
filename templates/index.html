@@ -7,14 +7,14 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0f0f0f;
-    --surface: #1a1a1a;
-    --border: #2a2a2a;
-    --text: #e8e4df;
-    --text-dim: #7a756e;
-    --accent-smart: #4ecdc4;
-    --accent-lean: #ffe66d;
-    --accent-swift: #ff6b6b;
+    --bg: #f5f3ef;
+    --surface: #ffffff;
+    --border: #ddd8d0;
+    --text: #1a1a1a;
+    --text-dim: #6b6560;
+    --accent-smart: #0e9e8f;
+    --accent-lean: #c5a000;
+    --accent-swift: #d93b3b;
     --radius: 8px;
   }
 
@@ -208,19 +208,19 @@
     border-color: var(--accent-smart);
     background: var(--accent-smart);
   }
-  .check-label.smarter input:checked ~ .check-box svg { stroke: var(--bg); }
+  .check-label.smarter input:checked ~ .check-box svg { stroke: #fff; }
 
   .check-label.leaner input:checked ~ .check-box {
     border-color: var(--accent-lean);
     background: var(--accent-lean);
   }
-  .check-label.leaner input:checked ~ .check-box svg { stroke: var(--bg); }
+  .check-label.leaner input:checked ~ .check-box svg { stroke: #fff; }
 
   .check-label.swifter input:checked ~ .check-box {
     border-color: var(--accent-swift);
     background: var(--accent-swift);
   }
-  .check-label.swifter input:checked ~ .check-box svg { stroke: var(--bg); }
+  .check-label.swifter input:checked ~ .check-box svg { stroke: #fff; }
 
   .nav-buttons {
     display: flex;
@@ -242,12 +242,12 @@
     font-size: 16px;
   }
 
-  .nav-btn:hover { background: #3a3a3a; }
+  .nav-btn:hover { background: #c5c0b8; }
   .nav-btn:disabled { opacity: 0.3; cursor: default; }
 
   .pdf-viewer {
     flex: 1;
-    background: #111;
+    background: #e8e5e0;
   }
 
   .pdf-viewer iframe {
