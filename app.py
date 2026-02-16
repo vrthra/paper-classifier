@@ -12,7 +12,7 @@ def ensure_csv():
     if not os.path.exists(CSV_FILE):
         with open(CSV_FILE, "w", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow(["pdf_name", "smarter", "leaner", "swifter", "seeds"])
+            writer.writerow(["pdf_name", "deeper", "leaner", "swifter", "seeds"])
 
 
 def load_csv():
@@ -22,7 +22,7 @@ def load_csv():
         reader = csv.DictReader(f)
         for row in reader:
             data[row["pdf_name"]] = {
-                "smarter": row["smarter"] == "True",
+                "deeper": row["deeper"] == "True",
                 "leaner": row["leaner"] == "True",
                 "swifter": row["swifter"] == "True",
                 "seeds": row["seeds"] == "True",
@@ -33,9 +33,9 @@ def load_csv():
 def save_csv(data):
     with open(CSV_FILE, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["pdf_name", "smarter", "leaner", "swifter", "seeds"])
+        writer.writerow(["pdf_name", "deeper", "leaner", "swifter", "seeds"])
         for pdf_name, checks in sorted(data.items()):
-            writer.writerow([pdf_name, checks["smarter"], checks["leaner"], checks["swifter"], checks["seeds"]])
+            writer.writerow([pdf_name, checks["deeper"], checks["leaner"], checks["swifter"], checks["seeds"]])
 
 
 @app.route("/")
@@ -60,7 +60,7 @@ def classify():
     pdf_name = body["pdf_name"]
     data = load_csv()
     data[pdf_name] = {
-        "smarter": body.get("smarter", False),
+        "deeper": body.get("deeper", False),
         "leaner": body.get("leaner", False),
         "swifter": body.get("swifter", False),
         "seeds": body.get("seeds", False),
