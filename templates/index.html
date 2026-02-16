@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDF Classifier — Deeper · Leaner · Swifter</title>
+<title>PDF Classifier — Deeper · Smarter · Swifter</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -131,7 +131,7 @@
 
   .tag-dot.on { opacity: 1; }
   .tag-dot.deeper { background: var(--accent-smart); }
-  .tag-dot.leaner { background: var(--accent-lean); }
+  .tag-dot.smarter { background: var(--accent-lean); }
   .tag-dot.swifter { background: var(--accent-swift); }
   .tag-dot.seeds { background: var(--accent-seeds); }
 
@@ -212,11 +212,11 @@
   }
   .check-label.deeper input:checked ~ .check-box svg { stroke: #fff; }
 
-  .check-label.leaner input:checked ~ .check-box {
+  .check-label.smarter input:checked ~ .check-box {
     border-color: var(--accent-lean);
     background: var(--accent-lean);
   }
-  .check-label.leaner input:checked ~ .check-box svg { stroke: #fff; }
+  .check-label.smarter input:checked ~ .check-box svg { stroke: #fff; }
 
   .check-label.swifter input:checked ~ .check-box {
     border-color: var(--accent-swift);
@@ -312,7 +312,7 @@
 
 <header>
   <h1>PDF Classifier</h1>
-  <span class="subtitle">deeper · leaner · swifter</span>
+  <span class="subtitle">deeper · smarter · swifter</span>
   <div class="progress-bar">
     <span id="progressText">0 / 0 classified</span>
     <div class="progress-track">
@@ -328,7 +328,7 @@
     <div class="toolbar" id="toolbar" style="display:none">
       <span class="current-name" id="currentName"></span>
       <div class="checkbox-group">
-        {% for cat, color in [("deeper","smart"), ("leaner","lean"), ("swifter","swift"), ("seeds","seeds")] %}
+        {% for cat, color in [("deeper","smart"), ("smarter","lean"), ("swifter","swift"), ("seeds","seeds")] %}
         <label class="check-label {{ cat }}">
           <input type="checkbox" id="cb-{{ cat }}" onchange="saveCheck()">
           <span class="check-box">
@@ -378,7 +378,7 @@ function renderSidebar() {
       <span class="filename" title="${name}">${name}</span>
       <span class="tags">
         <span class="tag-dot deeper ${c.deeper ? 'on' : ''}"></span>
-        <span class="tag-dot leaner ${c.leaner ? 'on' : ''}"></span>
+        <span class="tag-dot smarter ${c.smarter ? 'on' : ''}"></span>
         <span class="tag-dot swifter ${c.swifter ? 'on' : ''}"></span>
         <span class="tag-dot seeds ${c.seeds ? 'on' : ''}"></span>
       </span>
@@ -403,7 +403,7 @@ function selectPdf(idx) {
 
   const c = classifications[name] || {};
   document.getElementById('cb-deeper').checked = !!c.deeper;
-  document.getElementById('cb-leaner').checked = !!c.leaner;
+  document.getElementById('cb-smarter').checked = !!c.smarter;
   document.getElementById('cb-swifter').checked = !!c.swifter;
   document.getElementById('cb-seeds').checked = !!c.seeds;
 
@@ -423,7 +423,7 @@ async function saveCheck() {
   const data = {
     pdf_name: name,
     deeper: document.getElementById('cb-deeper').checked,
-    leaner: document.getElementById('cb-leaner').checked,
+    smarter: document.getElementById('cb-smarter').checked,
     swifter: document.getElementById('cb-swifter').checked,
     seeds: document.getElementById('cb-seeds').checked,
   };
@@ -443,7 +443,7 @@ async function saveCheck() {
 }
 
 function updateProgress() {
-  const classified = Object.values(classifications).filter(c => c.deeper || c.leaner || c.swifter || c.seeds).length;
+  const classified = Object.values(classifications).filter(c => c.deeper || c.smarter || c.swifter || c.seeds).length;
   document.getElementById('progressText').textContent = `${classified} / ${pdfs.length} classified`;
   document.getElementById('progressFill').style.width = pdfs.length ? `${(classified / pdfs.length) * 100}%` : '0%';
 }
@@ -452,7 +452,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); navigate(1); }
   if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); }
   if (e.key === '1') document.getElementById('cb-deeper').click();
-  if (e.key === '2') document.getElementById('cb-leaner').click();
+  if (e.key === '2') document.getElementById('cb-smarter').click();
   if (e.key === '3') document.getElementById('cb-swifter').click();
   if (e.key === '4') document.getElementById('cb-seeds').click();
 });
